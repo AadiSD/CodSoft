@@ -2,6 +2,7 @@ import tkinter as tk
 from tkinter import messagebox
 
 def center_window(root):
+    # Center the main window on the screen
     screen_width = root.winfo_screenwidth()
     screen_height = root.winfo_screenheight()
     x = (screen_width - 600) // 2
@@ -10,12 +11,14 @@ def center_window(root):
     root.configure(background='light gray')
 
 def list_contacts():
+    # Clear and populate the contact list with contact names and phone numbers
     contact_list.delete(0, tk.END)
     for name, contact_info in contacts.items():
         phone_number = contact_info['phone']
         contact_list.insert(tk.END, f"{name} - {phone_number}")
 
 def show_contact_details(event):
+    # Show the details of the selected contact when clicked on the contact list
     selected_indices = contact_list.curselection()
     if selected_indices:
         selected_contact = contact_list.get(selected_indices[0])
@@ -27,12 +30,14 @@ def show_contact_details(event):
         update_name_entry.insert(0, selected_name)
 
 def clear_entries():
+    # Clear the input fields
     name_entry.delete(0, tk.END)
     phone_entry.delete(0, tk.END)
     email_entry.delete(0, tk.END)
     address_entry.delete(0, tk.END)
 
 def delete_contact():
+    # Delete the selected contact from the list
     selected_contact = contact_list.get(contact_list.curselection())
     if not selected_contact:
         messagebox.showerror("Error", "Please select a contact to delete.")
@@ -49,6 +54,7 @@ def delete_contact():
             messagebox.showerror("Error", "Selected contact not found.")
 
 def search_contact():
+    # Search for contacts based on the entered search term
     search_term = search_entry.get()
     matching_contacts = {}
 
@@ -61,6 +67,7 @@ def search_contact():
     list_contacts()
 
 def update_contact():
+    # Update the contact information
     selected_name = update_name_entry.get()
     phone = phone_entry.get()
     email = email_entry.get()
@@ -80,27 +87,31 @@ def update_contact():
         messagebox.showerror("Error", "Selected contact not found.")
 
 def view_all_contacts():
+    # View all contacts
     contacts.clear()
     contacts.update(all_contacts)
     list_contacts()
 
 def validate_phone_input(P):
+    # Validate phone input to allow only numeric digits
     if P == "" or P.isdigit():
         return True
     else:
         return False
 
 def clear_fields():
+    # Clear input fields
     clear_entries()
 
 root = tk.Tk()
 root.title("Contact Book")
 center_window(root)
 
-contacts = {}
-all_contacts = {}
+contacts = {}  # Store current contacts
+all_contacts = {}  # Store all contacts
 
 def add_contact():
+    # Add a new contact
     name = name_entry.get()
     phone = phone_entry.get()
     email = email_entry.get()
