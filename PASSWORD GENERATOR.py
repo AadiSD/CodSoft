@@ -8,6 +8,12 @@ def generate_password(length):
     length = max(8, length)
     return ''.join(random.choice(all_characters) for _ in range(length))
 
+def on_validate(P):
+    if P.isdigit():
+        return True
+    else:
+        return False
+
 def generate_and_display_password():
     length = length_entry.get()
     try:
@@ -36,8 +42,9 @@ window.geometry(f"{window_width}x{window_height}+{x}+{y}")
 window.configure(bg='light gray')
 
 # Create and place the widgets
-Label(window, text="Enter the desired length of the password:",bg='light gray').pack(pady=10)
-length_entry = Entry(window)
+Label(window, text="Enter the desired length of the password:", bg='light gray').pack(pady=10)
+length_entry = Entry(window, validate='key')
+length_entry.configure(validatecommand=(length_entry.register(on_validate), '%P'))
 length_entry.pack(pady=10)
 length_entry.configure(bg='white')
 
