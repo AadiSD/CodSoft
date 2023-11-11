@@ -1,56 +1,76 @@
-# Function to perform addition
+import tkinter as tk
+from tkinter import Label, Entry, Button, StringVar
+
 def add(x, y):
     return x + y
 
-# Function to perform subtraction
 def subtract(x, y):
     return x - y
 
-# Function to perform multiplication
 def multiply(x, y):
     return x * y
 
-# Function to perform division
 def divide(x, y):
     if y == 0:
         return "Cannot divide by zero"
     return x / y
 
-# Main calculator loop
-while True:
-    # Display menu
-    print("Select Arithmetic Operation : ")
-    print("1. Addition")
-    print("2. Subtraction")
-    print("3. Multiplication")
-    print("4. Division")
-    print("5. Exit")
+def calculate_result():
+    num1 = float(num1_entry.get())
+    num2 = float(num2_entry.get())
+    operation = operation_var.get()
 
-    choice = input("Enter choice (1/2/3/4/5) : ")
-
-    if choice == '5':
-        print("Calculator has been closed.")
-        break
-
-    if choice not in ('1', '2', '3', '4'):
-        print("Invalid input. Please try again.")
-        continue
-
-    # Input two numbers
-    num1 = float(input("Enter first number : "))
-    num2 = float(input("Enter second number : "))
-
-    if choice == '1':
+    if operation == "Addition":
         result = add(num1, num2)
-        operation = "addition"
-    elif choice == '2':
+    elif operation == "Subtraction":
         result = subtract(num1, num2)
-        operation = "subtraction"
-    elif choice == '3':
+    elif operation == "Multiplication":
         result = multiply(num1, num2)
-        operation = "multiplication"
-    elif choice == '4':
+    elif operation == "Division":
         result = divide(num1, num2)
-        operation = "division"
 
-    print(f"The result of {operation} is: {result}")
+    result_label.config(text=f"The result of {operation.lower()} is: {result}")
+
+# Create the main window
+window = tk.Tk()
+window.title("Simple Calculator")
+
+window_width=300
+window_height=300
+
+screen_width = window.winfo_screenwidth()
+screen_height = window.winfo_screenheight()
+
+x = (screen_width - window_width) // 2
+y = (screen_height - window_height) // 2
+
+window.geometry(f"{window_width}x{window_height}+{x}+{y}")
+window.configure(bg='light gray')
+
+# Create and place the widgets
+Label(window, text="Enter the first number:", bg='light gray').grid(row=0, column=0, padx=10, pady=5)
+num1_entry = Entry(window)
+num1_entry.grid(row=0, column=1, padx=10, pady=5)
+num1_entry.configure(bg='white')
+
+Label(window, text="Enter the second number:", bg='light gray').grid(row=1, column=0, padx=10, pady=5)
+num2_entry = Entry(window)
+num2_entry.grid(row=1, column=1, padx=10, pady=5)
+num2_entry.configure(bg='white')
+
+Label(window, text="Select operation:", bg='light gray').grid(row=2, column=0, padx=10, pady=5)
+operations = ["Addition (+)", "Subtraction (-)", "Multiplication (*)", "Division(/)"]
+operation_var = StringVar(window)
+operation_var.set(operations[0])  # Default value
+operation_menu = tk.OptionMenu(window, operation_var, *operations)
+operation_menu.grid(row=2, column=1, padx=10, pady=5)
+operation_menu.configure(bg='white')
+
+calculate_button = Button(window, text="Calculate", command=calculate_result, bg='white')
+calculate_button.grid(row=3, column=0, columnspan=2, pady=10)
+
+result_label = Label(window, text="", bg='light gray')
+result_label.grid(row=4, column=0, columnspan=2, pady=5)
+
+# Start the main event loop
+window.mainloop()
