@@ -2,6 +2,7 @@ import tkinter as tk
 from tkinter import Label, Button, messagebox
 import random
 
+# Made By @AadiSD
 
 class RockPaperScissorsGame:
     def __init__(self, root):

@@ -1,6 +1,8 @@
 import tkinter as tk
 from tkinter import Label, Entry, Button, StringVar, messagebox
 
+# Made By @AadiSD
+
 def is_float(value):
     try:
         float(value)
